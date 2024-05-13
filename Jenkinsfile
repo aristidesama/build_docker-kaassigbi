@@ -9,7 +9,7 @@ pipeline{
     stages{
         stage('Echo') {
             steps{
-                sh "echo Je suis là ${car}"
+                sh "echo Je suis ici !"
                 }
             }
         stage('Show Release') {
