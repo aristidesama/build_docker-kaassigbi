@@ -61,8 +61,7 @@ pipeline{
                 withCredentials([usernamePassword(credentialsId: 'DOCKER_CREDS_KAASSIGBI', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]){
                     sh """
                     docker logout  && \
-                    docker login  --username $USERNAME --password $PASSWORD && \
-                    docker tag ${BRANCH_NAME} aristidesama2/${BRANCH_NAME}
+                    docker login  --username $USERNAME --password $PASSWORD && \                    
                     docker push aristidesama2/${BRANCH_NAME}
                     """
                 }
