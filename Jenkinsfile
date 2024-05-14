@@ -37,14 +37,14 @@ pipeline{
                 sh "echo $BRANCH_NAME"
                 sh "echo $env.GIT_BRANCH"
                 sh "printenv"
-                sh "docker build -t aristidesama2/$env.BRANCH_NAME/default_image_$env.BRANCH_NAME ."
+                sh "docker build -t aristidesama2/$env.BRANCH_NAME ."
             }
         }
 
 
         stage('Test docker image') { 
             steps {
-                sh "docker run -d -p 5000:8000 --name default_container_$env.BRANCH_NAME aristidesama2/$env.BRANCH_NAME/default_image_$env.BRANCH_NAME"
+                sh "docker run -d -p 5000:8000 --name default_container_$env.BRANCH_NAME aristidesama2/$env.BRANCH_NAME"
             }
         }
 
@@ -62,7 +62,8 @@ pipeline{
                     sh """
                     docker logout  && \
                     docker login  --username $USERNAME --password $PASSWORD && \
-                    docker push aristidesama2/${BRANCH_NAME}/default_image_$env.BRANCH_NAME:latest
+                    docker tag ${BRANCH_NAME} aristidesama2/${BRANCH_NAME}
+                    docker push aristidesama2/${BRANCH_NAME}
                     """
                 }
             }
