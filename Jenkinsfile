@@ -70,7 +70,12 @@ pipeline{
 
     post{
         always {
-            sh "docker container stop default_container_$env.BRANCH_NAME"
+            sh """
+            if [ "$(docker ps -a -q -f name=default_container_$env.BRANCH_NAME)" ]; then 
+            docker container stop default_container_$env.BRANCH_NAME
+            echo "EXIST and DELETE";
+            fi
+            """
             sh "docker container rm default_container_$env.BRANCH_NAME" 
             }
     }    
